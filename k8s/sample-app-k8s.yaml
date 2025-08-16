@@ -48,10 +48,11 @@ spec:
       - pause:
           duration: 3m
       trafficRouting:
-        plugins:
-          argoproj-labs/openshift:
-            routes:
-            - sample-app-route
+        nginx:
+          additionalIngressAnnotations:
+            canary-by-header: X-Canary
+          stableIngress: sample-app
+
 
 ---
 
