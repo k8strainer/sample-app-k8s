@@ -177,31 +177,13 @@ spec:
   type: LoadBalancer
 
 ---
-apiVersion: route.openshift.io/v1
-kind: Route
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: sample-app-route
-  annotations:
-    haproxy.router.openshift.io/balance: "random"
-    haproxy.router.openshift.io/disable_cookies: "true"
   labels:
     app: sample-app
+  name: sample-app
   namespace: sample-app
-spec:
-  port:
-    targetPort: http
-#  tls:
-#    insecureEdgeTerminationPolicy: Redirect
-#    termination: edge
-  to:
-    kind: Service
-    name: sample-app-stable
-    weight: 100
-
-  alternateBackends:
-    - kind: Service
-      name: sample-app-canary
-      weight: 0
 
 
 ---
