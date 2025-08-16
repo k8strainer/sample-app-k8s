@@ -86,12 +86,6 @@ metadata:
   name: sample-app
   namespace: sample-app
 spec:
-  args:
-  - name: bearer-token
-    valueFrom:
-      secretKeyRef:
-        name: sample-app-admin-secret
-        key: bearerToken
   metrics:
   # check request count
   - name: total-requests-check
@@ -99,11 +93,8 @@ spec:
     failureLimit: 1
     provider:
       prometheus:
-        address: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
-        insecure: true  # Avoid TLS handshake errors
-        headers:
-        - key: Authorization
-          value: "Bearer {{ args.bearer-token }}"
+        address: http://prometheus-k8s.monitoring.svc.cluster.local:9090
+        #insecure: true  # Avoid TLS handshake errors
         query: |
           sum(increase(
             sample_app_http_requests_total{service="sample-app-canary", status="200"}[1m])
@@ -116,11 +107,8 @@ spec:
     failureLimit: 1
     provider:
       prometheus:
-        address: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
-        insecure: true
-        headers:
-        - key: Authorization
-          value: "Bearer {{ args.bearer-token }}"
+        address: http://prometheus-k8s.monitoring.svc.cluster.local:9090
+        #insecure: true
         query: |
           1000 * (
             sum(increase(sample_app_http_request_duration_seconds_sum{service="sample-app-canary",status="200"}[1m]))
