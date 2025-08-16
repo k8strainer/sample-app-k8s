@@ -141,6 +141,8 @@ metadata:
   namespace: sample-app
   labels:
     app: sample-app
+  annotations:
+    argo-rollouts.argoproj.io/managed-by-rollouts: sample-app
 spec:
   ports:
   - name: http
@@ -151,6 +153,7 @@ spec:
     targetPort: metrics
   selector:
     app: sample-app
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -159,6 +162,8 @@ metadata:
   namespace: sample-app
   labels:
     app: sample-app
+  annotations:
+    argo-rollouts.argoproj.io/managed-by-rollouts: sample-app
 spec:
   ports:
   - name: http
@@ -169,6 +174,8 @@ spec:
     targetPort: metrics
   selector:
     app: sample-app
+  type: LoadBalancer
+
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
