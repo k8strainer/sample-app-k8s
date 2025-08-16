@@ -1,3 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: sample-app
+  name: sample-app
+  namespace: sample-app
+spec:
+  ingressClassName: nginx
+  rules:
+  # CHANGE THIS
+  - host: sample-app.gke1.itconcepts.cloud
+    http:
+      paths:
+      - backend:
+          service:
+            name: sample-app
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
