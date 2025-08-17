@@ -1,1 +1,1 @@
-oc argo rollouts get rollout sample-app --watch -n sample-app
+kubectl argo rollouts get rollout sample-app --watch -n sample-app

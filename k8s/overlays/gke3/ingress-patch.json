@@ -1,0 +1,8 @@
+[
+  {
+    "op": "replace",
+    "path": "/spec/rules/0/host",
+    "value": "sample-app.gke3.gfu.cloud"
+  }
+]
+

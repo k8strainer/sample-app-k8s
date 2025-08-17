@@ -2,8 +2,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sample-app-argo 
-  namespace: openshift-gitops
+  name: sample-app-k8s
+  namespace: argocd
 spec:
   destination:
     namespace: sample-app
@@ -13,8 +13,8 @@ spec:
   # according to sourceRepos, destination-Namespaces and -Servers etc.
   #project: appproject-testing
   source:
-    repoURL: https://github.com/k8strainer/sample-app-opns.git
-    targetRevision: main
+    repoURL: https://github.com/k8strainer/sample-app-k8s.git
+    targetRevision: master
     path: k8s
   syncPolicy:
     automated:
@@ -27,14 +27,3 @@ spec:
     retry:
       limit: 5
   
-  ignoreDifferences:
-  # needed, as otherwise route-weighting of argo.-rollout-route-plugin will be overriden 
-  # by argoCD Sync from git
-  - group: route.openshift.io
-    kind: Route
-    name: sample-app-route
-    namespace: sample-app
-    # optional: einzelne Felder, die ignoriert werden sollen
-    jsonPointers:
-    - /spec/to/weight
-    - /spec/alternateBackends
