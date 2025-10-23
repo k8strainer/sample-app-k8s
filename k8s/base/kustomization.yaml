@@ -1,4 +1,4 @@
 resources:
   - ingress.yaml
-  - sample-app-k8s.yaml
+  - sample-apps.yaml
 
